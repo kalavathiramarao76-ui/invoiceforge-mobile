@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'providers/app_provider.dart';
 import 'screens/splash_screen.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
   runApp(const InvoiceForgeApp());
 }
-
 class InvoiceForgeApp extends StatelessWidget {
   const InvoiceForgeApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -42,28 +42,18 @@ class InvoiceForgeApp extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
               side: BorderSide(color: const Color(0xFF22c55e).withOpacity(0.15)),
             ),
-          ),
           appBarTheme: const AppBarTheme(
             backgroundColor: Colors.transparent,
-            elevation: 0,
             centerTitle: true,
-          ),
           inputDecorationTheme: InputDecorationTheme(
             filled: true,
             fillColor: const Color(0xFF141f1a),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide(color: const Color(0xFF22c55e).withOpacity(0.2)),
-            ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: const Color(0xFF22c55e).withOpacity(0.2)),
-            ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
               borderSide: const BorderSide(color: Color(0xFF22c55e), width: 2),
-            ),
-          ),
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF22c55e),
@@ -73,11 +63,8 @@ class InvoiceForgeApp extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
-            ),
-          ),
         ),
         home: const SplashScreen(),
       ),
     );
   }
-}
